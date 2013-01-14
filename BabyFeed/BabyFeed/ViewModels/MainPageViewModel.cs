@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using Caliburn.Micro;
 
 namespace BubblingLabs.BabyFeed.ViewModels
 {
-    public class MainPageViewModel
+    public class MainPageViewModel : Screen
     {
         public string Name { get; set; }
 
@@ -18,6 +19,7 @@ namespace BubblingLabs.BabyFeed.ViewModels
         public void SayHello()
         {
             MessageBox.Show(string.Format("Hello {0}!", Name)); //Don't do this in real life :)
+            Name = "test";
         }
     }
 }

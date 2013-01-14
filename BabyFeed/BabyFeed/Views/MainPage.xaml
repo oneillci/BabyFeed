@@ -30,8 +30,7 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <StackPanel>
                 <TextBox x:Name="Name" />
-                <Button x:Name="SayHello"
-                Content="Click Me"/>
+                <Button x:Name="SayHello" Content="Click Me"/>
             </StackPanel>
         </Grid>
     </Grid>
