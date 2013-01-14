@@ -20,6 +20,16 @@ namespace BubblingLabs.BabyFeed
         public App()
         {
             InitializeComponent();
+
+            // Show graphics profiling information while debugging.
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                // Display the current frame rate counters.
+                Application.Current.Host.Settings.EnableFrameRateCounter = true;
+  
+                // Display the metro grid helper.
+                MetroGridHelper.IsVisible = true;
+            }
         }
     }
     /*

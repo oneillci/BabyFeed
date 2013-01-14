@@ -4,11 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:local="clr-namespace:BubblingLabs.BabyFeed">
+    xmlns:local="clr-namespace:BubblingLabs.BabyFeed"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <!--Application Resources-->
     <Application.Resources>
         <local:BabyFeedBootstrapper x:Key="bootstrapper"/>
+        <sys:String x:Key="AppName">BABY FEEDER</sys:String>
     </Application.Resources>
 
     <!--Required object that handles lifetime events for the application-->

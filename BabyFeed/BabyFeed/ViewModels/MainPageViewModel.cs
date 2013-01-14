@@ -9,17 +9,16 @@ namespace BubblingLabs.BabyFeed.ViewModels
 {
     public class MainPageViewModel : Screen
     {
-        public string Name { get; set; }
+        public DateTime FeedTime { get; set; }
 
-        public bool CanSayHello
+        public MainPageViewModel()
         {
-            get { return !string.IsNullOrWhiteSpace(Name); }
+            FeedTime = DateTime.Now;
         }
 
-        public void SayHello()
+        public void Save()
         {
-            MessageBox.Show(string.Format("Hello {0}!", Name)); //Don't do this in real life :)
-            Name = "test";
+            MessageBox.Show("Saving");
         }
     }
 }
