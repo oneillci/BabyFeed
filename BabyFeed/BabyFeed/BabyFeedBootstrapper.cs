@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BubblingLabs.BabyFeed.ViewModels;
 using Caliburn.Micro;
+using Microsoft.Phone.Controls;
 
 namespace BubblingLabs.BabyFeed
 {
@@ -25,6 +26,32 @@ namespace BubblingLabs.BabyFeed
         static void AddCustomConventions()
         {
             //ellided  
+            //Conventions for Toolkit controls
+            //http://compiledexperience.com/blog/posts/caliburn-micro-conventions-for-windows-phone
+            ConventionManager.AddElementConvention<ToggleSwitch>(ToggleSwitch.IsCheckedProperty, "IsChecked", "Checked");
+
+            //AddToggleSwitchConvention();
+        }
+
+        private static void AddToggleSwitchConvention()
+        {           
+        //    var cv = ConventionManager.AddElementConvention<ToggleSwitch>(
+        //        ToggleSwitch.IsCheckedProperty,
+        //        "IsChecked",
+        //        "Click");
+        //    cv.ApplyBinding = (viewModelType, path, property, element, convention) =>
+        //{
+        //    if (!ConventionManager.SetBinding(viewModelType, path, property, element, convention))
+        //        return false;
+
+        //    if (ConventionManager.HasBinding(element, ToggleSwitch.ContentProperty)) return true;
+
+        //    var binding = new Binding(path + "Content") { Mode = BindingMode.TwoWay };
+        //    BindingOperations.SetBinding(element, ToggleSwitch.ContentProperty, binding);
+
+        //    return true;
+        //};
+
         }
 
         protected override object GetInstance(Type service, string key)

@@ -24,7 +24,8 @@ namespace BubblingLabs.BabyFeed.ViewModels
         public void Save()
         {
             FeedCount++;
-            //MessageBox.Show(string.Format("Time: {0}", FeedTime.ToString()));
+            if (SetReminder.Value)
+                MessageBox.Show(string.Format("Time: {0}", FeedTime.ToString()));
         }
     }
 }
