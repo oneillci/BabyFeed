@@ -14,8 +14,11 @@ namespace BubblingLabs.BabyFeed.ViewModels
         public bool? SetReminder { get; set; }
         public int FeedCount { get; set; }
 
+        public List<Feed> Feeds { get; set; }
+
         public MainPageViewModel()
         {
+            Feeds = new List<Feed>(); // todo: get from IsolatedStorage
             FeedTime = DateTime.Now;
             NextFeedTime = FeedTime.AddHours(3);
             SetReminder = true;
@@ -23,9 +26,28 @@ namespace BubblingLabs.BabyFeed.ViewModels
 
         public void Save()
         {
-            FeedCount++;
+            Feeds.Add(new Feed
+            {
+                FeedTime = this.FeedTime,
+                Side = Side.Irrelevant
+            });
+
+            FeedCount = Feeds.Count;
             if (SetReminder.Value)
                 MessageBox.Show(string.Format("Time: {0}", FeedTime.ToString()));
         }
+    }
+
+    public class Feed
+    {
+        public DateTime FeedTime { get; set; }
+        public Side Side { get; set; }
+    }
+
+    public enum Side
+    {
+    	Irrelevant,
+        Left,
+        Right
     }
 }
