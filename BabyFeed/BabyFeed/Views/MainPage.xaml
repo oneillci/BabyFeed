@@ -36,7 +36,16 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <StackPanel>
-                <toolkit:TimePicker/>
+                <toolkit:TimePicker x:Name="FeedTime" Value="{Binding FeedTime, Mode=TwoWay}"/>
+                <StackPanel Orientation="Horizontal" Margin="12,0">
+                	<TextBlock TextWrapping="Wrap" Text="Remind of next feed at " Margin="0,14,0,0"/>
+                	<TextBlock x:Name="NextFeedTime" TextWrapping="Wrap" Text="{Binding NextFeedTime, StringFormat=\{0:t\}}" Margin="0,14,0,0"/>
+                	<toolkit:ToggleSwitch FontSize="{StaticResource PhoneFontSizeNormal}" IsChecked="{Binding SetReminder, Mode=TwoWay}" Margin="0"/>
+                </StackPanel>
+                <StackPanel Height="100" Orientation="Horizontal" Margin="12,0">
+                	<TextBlock x:Name="FeedCount" TextWrapping="Wrap" Text="TextBlock"/>
+                	<TextBlock TextWrapping="Wrap" Text="feeds today" Margin="10,0,0,0"/>
+                </StackPanel>
             </StackPanel>
         </Grid>
     </Grid>

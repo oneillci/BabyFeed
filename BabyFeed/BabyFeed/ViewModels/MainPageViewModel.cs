@@ -10,15 +10,21 @@ namespace BubblingLabs.BabyFeed.ViewModels
     public class MainPageViewModel : Screen
     {
         public DateTime FeedTime { get; set; }
+        public DateTime NextFeedTime { get; set; }
+        public bool? SetReminder { get; set; }
+        public int FeedCount { get; set; }
 
         public MainPageViewModel()
         {
             FeedTime = DateTime.Now;
+            NextFeedTime = FeedTime.AddHours(3);
+            SetReminder = true;
         }
 
         public void Save()
         {
-            MessageBox.Show("Saving");
+            FeedCount++;
+            //MessageBox.Show(string.Format("Time: {0}", FeedTime.ToString()));
         }
     }
 }
