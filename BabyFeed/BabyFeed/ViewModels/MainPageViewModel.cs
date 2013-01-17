@@ -4,14 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using Caliburn.Micro;
+using Microsoft.Phone.Scheduler;
 
 namespace BubblingLabs.BabyFeed.ViewModels
 {
     public class MainPageViewModel : Screen
     {
+        private const string BabyFeedReminderName = "BubblingLabs.BabyFeedReminder";
+
         public DateTime FeedTime { get; set; }
+
         public DateTime NextFeedTime { get; set; }
-        public bool? SetReminder { get; set; }
+
+        public bool SetReminder { get; set; }
         public int FeedCount { get; set; }
 
         public List<Feed> Feeds { get; set; }
@@ -33,8 +38,25 @@ namespace BubblingLabs.BabyFeed.ViewModels
             });
 
             FeedCount = Feeds.Count;
-            if (SetReminder.Value)
-                MessageBox.Show(string.Format("Time: {0}", FeedTime.ToString()));
+            if (SetReminder)
+                AddReminder();
+        }
+
+        private void AddReminder()
+        {
+            NextFeedTime= DateTime.Now.AddSeconds(30);
+
+            var oldReminder = ScheduledActionService.Find(BabyFeedReminderName);
+            if (oldReminder != null)
+                ScheduledActionService.Remove(oldReminder.Name);
+
+            var reminder = new Reminder(BabyFeedReminderName)
+            {
+                BeginTime = NextFeedTime,
+                Title = "BabyFeed",
+                Content = "Time to feed the baby!"
+            };
+            ScheduledActionService.Add(reminder);
         }
     }
 
