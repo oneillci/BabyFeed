@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using Caliburn.Micro;
 using Microsoft.Phone.Scheduler;
+using Microsoft.Phone.Shell;
 
 namespace BubblingLabs.BabyFeed.ViewModels
 {
@@ -14,7 +15,7 @@ namespace BubblingLabs.BabyFeed.ViewModels
 
         public DateTime FeedTime { get; set; }
 
-        public DateTime NextFeedTime { get; set; }
+        public DateTime NextFeedTime { get { return FeedTime.AddHours(3); } }
 
         public bool SetReminder { get; set; }
         public int FeedCount { get; set; }
@@ -25,7 +26,6 @@ namespace BubblingLabs.BabyFeed.ViewModels
         {
             Feeds = new List<Feed>(); // todo: get from IsolatedStorage
             FeedTime = DateTime.Now;
-            NextFeedTime = FeedTime.AddHours(3);
             SetReminder = true;
         }
 
@@ -38,13 +38,14 @@ namespace BubblingLabs.BabyFeed.ViewModels
             });
 
             FeedCount = Feeds.Count;
+            UpdateTileBackground();
             if (SetReminder)
                 AddReminder();
         }
 
         private void AddReminder()
         {
-            NextFeedTime= DateTime.Now.AddSeconds(30);
+            FeedTime  = DateTime.Now.AddSeconds(30);
 
             var oldReminder = ScheduledActionService.Find(BabyFeedReminderName);
             if (oldReminder != null)
@@ -57,6 +58,16 @@ namespace BubblingLabs.BabyFeed.ViewModels
                 Content = "Time to feed the baby!"
             };
             ScheduledActionService.Add(reminder);
+        }
+
+        private void UpdateTileBackground()
+        {
+            var tile = ShellTile.ActiveTiles.First();
+            var newData = new StandardTileData()
+            {
+                BackContent = "Next feed at " + NextFeedTime.ToShortTimeString()
+            };
+            tile.Update(newData);
         }
     }
 
