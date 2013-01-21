@@ -15,34 +15,40 @@ namespace BubblingLabs.BabyFeed
 
         public Gender Gender
         {
-            get { return GetSetting<Gender>("gender"); }
-            set { UpdateSetting("gender", value); }
+            get { return GetSetting<Gender>(GenderKey); }
+            set { UpdateSetting(GenderKey, value); }
         }
 
         public int FeedInterval 
         {
-            get { return GetSetting<int>("feedinterval"); }
-            set { UpdateSetting("feedinterval", value); }
+            get { return GetSetting<int>(FeedIntervalKey); }
+            set { UpdateSetting(FeedIntervalKey, value); }
         }
 
         public bool Reminder
         {
-            get { return GetSetting<bool>("reminder"); }
-            set { UpdateSetting("reminder", value); }
+            get { return GetSetting<bool>(ReminderKey); }
+            set { UpdateSetting(ReminderKey, value); }
         }
         public DateTime DayStartTime
         {
-            get { return GetSetting<DateTime>("starttime"); }
-            set { UpdateSetting("starttime", value); }
+            get { return GetSetting<DateTime>(StartTimeKey); }
+            set { UpdateSetting(StartTimeKey, value); }
         }
+
+        private const string GenderKey = "gender";
+        private const string FeedIntervalKey = "feedinterval";
+        private const string ReminderKey = "reminder";
+        private const string StartTimeKey = "starttime";
 
         public BabyFeedSettings()
         {
+            // Set up defaults if they're not there
             var settings = IsolatedStorageSettings.ApplicationSettings;
-            if (!settings.Contains("gender")) settings.Add("gender", GenderDefault);
-            if (!settings.Contains("feedinterval")) settings.Add("feedinterval", FeedIntervalDefault);
-            if (!settings.Contains("reminder")) settings.Add("reminder", ReminderDefault);
-            if (!settings.Contains("starttime")) settings.Add("starttime", DayStartTimeDefault);
+            if (!settings.Contains(GenderKey)) settings.Add(GenderKey, GenderDefault);
+            if (!settings.Contains(FeedIntervalKey)) settings.Add(FeedIntervalKey, FeedIntervalDefault);
+            if (!settings.Contains(ReminderKey)) settings.Add(ReminderKey, ReminderDefault);
+            if (!settings.Contains(StartTimeKey)) settings.Add(StartTimeKey, DayStartTimeDefault);
             settings.Save();
         }
 

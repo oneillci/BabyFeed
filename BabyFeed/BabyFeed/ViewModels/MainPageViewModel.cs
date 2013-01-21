@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Media;
 using Caliburn.Micro;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
@@ -70,6 +71,21 @@ namespace BubblingLabs.BabyFeed.ViewModels
                 BackContent = "Next feed at " + NextFeedTime.ToShortTimeString()
             };
             tile.Update(newData);
+        }
+
+        public Brush BackgroundBrush
+        {
+            get
+            {
+                return new LinearGradientBrush(new GradientStopCollection()
+                {
+                    new GradientStop() { Color = Colors.Black, Offset=0 },
+                    settings.Gender == Gender.Boy
+                        ? new GradientStop() { Color = Colors.Blue, Offset = 1 }
+                        : new GradientStop() { Color = Colors.Red, Offset = 1 }
+
+                }, 90);
+            }
         }
     }
 
