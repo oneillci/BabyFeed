@@ -80,6 +80,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BabyFeedBootstrapper.cs" />
+    <Compile Include="BabyFeedSettings.cs" />
     <Compile Include="MetroGridHelper.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\Person.cs" />

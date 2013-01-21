@@ -11,22 +11,24 @@ namespace BubblingLabs.BabyFeed.ViewModels
 {
     public class MainPageViewModel : Screen
     {
+        private readonly BabyFeedSettings settings;
         private const string BabyFeedReminderName = "BubblingLabs.BabyFeedReminder";
 
         public DateTime FeedTime { get; set; }
 
-        public DateTime NextFeedTime { get { return FeedTime.AddHours(3); } }
+        public DateTime NextFeedTime { get { return FeedTime.AddHours(settings.FeedInterval); } }
 
         public bool SetReminder { get; set; }
         public int FeedCount { get; set; }
 
         public List<Feed> Feeds { get; set; }
 
-        public MainPageViewModel()
+        public MainPageViewModel(BabyFeedSettings babyFeedSettings)
         {
+            settings = babyFeedSettings;
             Feeds = new List<Feed>(); // todo: get from IsolatedStorage
             FeedTime = DateTime.Now;
-            SetReminder = true;
+            SetReminder = settings.Reminder;
         }
 
         public void Save()
