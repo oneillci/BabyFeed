@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace BubblingLabs.BabyFeed
 {
     public class DataHelper
     {
-        public List<Feed> GetTodaysFeeds()
+        public ObservableCollection<Feed> GetTodaysFeeds()
         {
             try
             {
@@ -19,17 +20,18 @@ namespace BubblingLabs.BabyFeed
                 {
                     using (var reader = new StreamReader(store.OpenFile("today.xml", FileMode.OpenOrCreate)))
                     {
-                        return JsonConvert.DeserializeObject<List<Feed>>(reader.ReadToEnd()) ?? new List<Feed>();
+                        return JsonConvert.DeserializeObject<ObservableCollection<Feed>>(reader.ReadToEnd()) 
+                            ?? new ObservableCollection<Feed>();
                     }
                 }
             }
             catch (IsolatedStorageException exception)
             {
-                return new List<Feed>();
+                return new ObservableCollection<Feed>();
             }
         }
 
-        public void SaveTodayFeeds(List<Feed> feeds)
+        public void SaveTodayFeeds(ObservableCollection<Feed> feeds)
         {
             string json = JsonConvert.SerializeObject(feeds);
             try

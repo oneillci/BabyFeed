@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
@@ -16,20 +17,19 @@ namespace BubblingLabs.BabyFeed.ViewModels
     {
         private readonly BabyFeedSettings settings;
         private readonly DataHelper dataHelper;
+        private readonly INavigationService navService;
         private const string BabyFeedReminderName = "BubblingLabs.BabyFeedReminder";
-
         public DateTime FeedTime { get; set; }
-
         public DateTime NextFeedTime { get { return FeedTime.AddHours(settings.FeedInterval); } }
-
         public bool SetReminder { get; set; }
         public int FeedCount { get { return Feeds.Count; } }
-        public List<Feed> Feeds { get; set; }
+        public ObservableCollection<Feed> Feeds { get; set; }
 
-        public MainPageViewModel(BabyFeedSettings babyFeedSettings, DataHelper dataHelper)
+        public MainPageViewModel(BabyFeedSettings babyFeedSettings, DataHelper dataHelper, INavigationService navService)
         {
             settings = babyFeedSettings;
             this.dataHelper = dataHelper;
+            this.navService = navService;
             Feeds = dataHelper.GetTodaysFeeds();
             FeedTime = DateTime.Now;
             SetReminder = settings.Reminder;
@@ -49,6 +49,11 @@ namespace BubblingLabs.BabyFeed.ViewModels
             UpdateTileBackground();
             if (SetReminder)
                 AddReminder();
+        }
+
+        public void Settings()
+        {
+            navService.UriFor<SettingsViewModel>().Navigate();
         }
 
         private void AddReminder()

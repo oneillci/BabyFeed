@@ -16,6 +16,9 @@
     shell:SystemTray.IsVisible="True">
 	<phone:PhoneApplicationPage.ApplicationBar>
 		<shell:ApplicationBar>
+			<shell:ApplicationBar.MenuItems>
+				<cal:AppBarMenuItem Message="Settings" Text="settings"/>
+			</shell:ApplicationBar.MenuItems>
 			<cal:AppBarButton IconUri="/Assets/AppBar/appbar.save.rest.png" Message="Save" Text="save"/>
 		</shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>
