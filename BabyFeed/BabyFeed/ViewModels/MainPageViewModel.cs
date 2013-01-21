@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -13,6 +15,7 @@ namespace BubblingLabs.BabyFeed.ViewModels
     public class MainPageViewModel : Screen
     {
         private readonly BabyFeedSettings settings;
+        private readonly DataHelper dataHelper;
         private const string BabyFeedReminderName = "BubblingLabs.BabyFeedReminder";
 
         public DateTime FeedTime { get; set; }
@@ -20,14 +23,14 @@ namespace BubblingLabs.BabyFeed.ViewModels
         public DateTime NextFeedTime { get { return FeedTime.AddHours(settings.FeedInterval); } }
 
         public bool SetReminder { get; set; }
-        public int FeedCount { get; set; }
-
+        public int FeedCount { get { return Feeds.Count; } }
         public List<Feed> Feeds { get; set; }
 
-        public MainPageViewModel(BabyFeedSettings babyFeedSettings)
+        public MainPageViewModel(BabyFeedSettings babyFeedSettings, DataHelper dataHelper)
         {
             settings = babyFeedSettings;
-            Feeds = new List<Feed>(); // todo: get from IsolatedStorage
+            this.dataHelper = dataHelper;
+            Feeds = dataHelper.GetTodaysFeeds();
             FeedTime = DateTime.Now;
             SetReminder = settings.Reminder;
         }
@@ -40,7 +43,9 @@ namespace BubblingLabs.BabyFeed.ViewModels
                 Side = Side.Irrelevant
             });
 
-            FeedCount = Feeds.Count;
+            dataHelper.SaveTodayFeeds(Feeds);
+
+            NotifyOfPropertyChange(() => FeedCount);
             UpdateTileBackground();
             if (SetReminder)
                 AddReminder();
@@ -71,7 +76,7 @@ namespace BubblingLabs.BabyFeed.ViewModels
                 BackContent = "Next feed at " + NextFeedTime.ToShortTimeString()
             };
             tile.Update(newData);
-        }
+        }       
 
         public Brush BackgroundBrush
         {
@@ -79,7 +84,7 @@ namespace BubblingLabs.BabyFeed.ViewModels
             {
                 return new LinearGradientBrush(new GradientStopCollection()
                 {
-                    new GradientStop() { Color = Colors.Black, Offset=0 },
+                    new GradientStop() { Color = Colors.Black, Offset = 0 },
                     settings.Gender == Gender.Boy
                         ? new GradientStop() { Color = Colors.Blue, Offset = 1 }
                         : new GradientStop() { Color = Colors.Red, Offset = 1 }

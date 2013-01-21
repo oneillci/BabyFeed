@@ -61,6 +61,9 @@
       <HintPath>..\packages\WPtoolkit.4.2012.10.30\lib\sl4-windowsphone71\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\sl4-windowsphone71\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PropertyChanged">
       <HintPath>..\packages\PropertyChanged.Fody.1.32.2.0\Lib\SL40-WP71\PropertyChanged.dll</HintPath>
     </Reference>
@@ -81,6 +84,7 @@
     </Compile>
     <Compile Include="BabyFeedBootstrapper.cs" />
     <Compile Include="BabyFeedSettings.cs" />
+    <Compile Include="DataHelper.cs" />
     <Compile Include="MetroGridHelper.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\Person.cs" />
