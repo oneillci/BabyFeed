@@ -25,6 +25,12 @@ namespace BubblingLabs.BabyFeed.ViewModels
         public int FeedCount { get { return Feeds.Count; } }
         public ObservableCollection<Feed> Feeds { get; set; }
 
+        protected override void OnActivate()
+        {
+            NotifyOfPropertyChange(() => BackgroundBrush);
+            NotifyOfPropertyChange(() => NextFeedTime);
+        }
+
         public MainPageViewModel(BabyFeedSettings babyFeedSettings, DataHelper dataHelper, INavigationService navService)
         {
             settings = babyFeedSettings;
@@ -87,14 +93,21 @@ namespace BubblingLabs.BabyFeed.ViewModels
         {
             get
             {
-                return new LinearGradientBrush(new GradientStopCollection()
-                {
-                    new GradientStop() { Color = Colors.Black, Offset = 0 },
-                    settings.Gender == Gender.Boy
-                        ? new GradientStop() { Color = Colors.Blue, Offset = 1 }
-                        : new GradientStop() { Color = Colors.Red, Offset = 1 }
+                // todo: replace this with appropriate background image
+                // http://cloford.com/resources/colours/500col.htm
+                // Pink 1 & cobalt
+                return settings.Gender == Gender.Boy 
+                    ? new SolidColorBrush(Color.FromArgb(255, 61, 89, 171))
+                : new SolidColorBrush(Color.FromArgb(255, 255, 181, 197));
 
-                }, 90);
+                //return new LinearGradientBrush(new GradientStopCollection()
+                //{
+                //    new GradientStop() { Color = Colors.Black, Offset = 0 },
+                //    settings.Gender == Gender.Boy
+                //        ? new GradientStop() { Color = Colors.Blue, Offset = 1 }
+                //        : new GradientStop() { Color = Colors.Red, Offset = 1 }
+
+                //}, 90);
             }
         }
     }
