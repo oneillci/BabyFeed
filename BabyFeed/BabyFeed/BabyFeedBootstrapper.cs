@@ -17,6 +17,7 @@ namespace BubblingLabs.BabyFeed
 
             container.RegisterPhoneServices();
             container.PerRequest<MainPageViewModel>();
+            container.PerRequest<SettingsViewModel>();
             container.PerRequest<BabyFeedSettings>();
             container.PerRequest<DataHelper>();
             //container.PerRequest<PivotPageViewModel>();
